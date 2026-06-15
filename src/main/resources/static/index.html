@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LinkedIn Recap Generator</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="workspace">
+      <aside class="panel">
+        <div>
+          <p class="eyebrow">Spring Boot + IBM watsonx</p>
+          <h1>LinkedIn 活動 Recap 生成器</h1>
+        </div>
+
+        <label>
+          LinkedIn 風格
+          <select id="tonePreset">
+            <option value="專業但不僵硬，像工程師在 LinkedIn 分享真實收穫；語氣清楚、可信、帶一點反思。">專業反思</option>
+            <option value="技術導向，重視架構、取捨、實作細節，但避免寫成教科書。">技術筆記</option>
+            <option value="溫暖真誠，聚焦參訪中的人、交流、觀察與學習。">溫暖交流</option>
+            <option value="面試作品導向，凸顯學習能力、工程判斷與可落地的成果。">面試亮點</option>
+          </select>
+        </label>
+        <label>
+          補充語氣偏好
+          <textarea id="tone" rows="3" placeholder="可空白。例如：不要太像業配、少用驚嘆號、結尾可以留問題。"></textarea>
+        </label>
+        <label>
+          撰寫習慣
+          <textarea id="habits" rows="5">開頭用一句觀察切入，中段整理 3 個收穫，結尾留下一個問題邀請互動。使用繁體中文，可以自然混用少量英文關鍵字。</textarea>
+        </label>
+        <label>
+          目標讀者
+          <input id="audience" value="台灣軟體工程師、技術主管、正在學 Spring Boot 的求職者">
+        </label>
+        <button id="saveProfile">儲存語氣設定</button>
+      </aside>
+
+      <section class="composer">
+        <div class="toolbar">
+          <label>
+            文章長度
+            <select id="length">
+              <option value="MEDIUM">中等</option>
+              <option value="SHORT">短文</option>
+              <option value="LONG">長文</option>
+            </select>
+          </label>
+          <label>
+            語言
+            <select id="languageMode">
+              <option value="ALL_CHINESE">全中</option>
+              <option value="ALL_ENGLISH">全英</option>
+              <option value="MIXED">中英混合</option>
+            </select>
+          </label>
+          <label id="englishRatioWrap">
+            英文比例 <span id="englishRatioValue">35%</span>
+            <input id="englishRatio" type="range" min="10" max="70" value="35">
+          </label>
+          <label class="check">
+            <input id="hashtags" type="checkbox" checked>
+            加上 hashtags
+          </label>
+        </div>
+
+        <label>
+          現場照片
+          <input id="photos" type="file" accept="image/*" multiple>
+        </label>
+        <div class="actions">
+          <button id="uploadPhotos">上傳照片</button>
+          <button id="analyzePhotos">分析照片</button>
+          <span id="photoList" class="muted">尚未上傳照片</span>
+        </div>
+        <label>
+          照片整理重點
+          <textarea id="photoNotes" rows="6" placeholder="把 Gemini / OCR 從照片整理出的重點貼在這裡。例如：講者提到 microservice 邊界、Spring Boot Actuator、IBM Cloud Code Engine 部署流程..."></textarea>
+        </label>
+
+        <label>
+          文章模板 / 過去文章參考
+          <textarea id="referencePosts" rows="8">英文標題用 emoji + 成果/活動主題，例如 Workshop Recap、Unlocked New Skills、Thrilled to begin。
+先寫英文 recap，說明活動名稱、主辦單位、實作成果或名次。
+中段用 3 個 key takeaways，每點格式是「技術概念：實作內容 + 學到什麼」。
+接著寫中文【活動回顧】，語氣可以熱情，但要保留技術細節。
+最後感謝主辦、講者、隊友，並寫一句期待未來應用。
+Hashtags 混合英文技術詞、活動名稱、產業關鍵字。</textarea>
+        </label>
+
+        <label>
+          活動描述
+          <textarea id="eventDescription" rows="9" placeholder="例如：今天參加 IBM 的 Java 工程師面試準備讀書會，練習 Spring Boot REST API、外部服務串接與 cloud deployment..."></textarea>
+        </label>
+        <button id="generate">生成 Recap</button>
+
+        <label>
+          生成結果
+          <textarea id="result" rows="14" placeholder="產出的 LinkedIn 草稿會出現在這裡，也可以手動微調後再 dry-run publish。"></textarea>
+        </label>
+        <div class="actions">
+          <button id="copy">複製</button>
+          <button id="publish">LinkedIn dry-run / 發文</button>
+        </div>
+        <pre id="status"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

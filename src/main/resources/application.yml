@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 12MB
+      max-request-size: 60MB
+
+app:
+  watsonx:
+    api-key: ${WATSONX_API_KEY:}
+    project-id: ${WATSONX_PROJECT_ID:}
+    base-url: ${WATSONX_BASE_URL:https://us-south.ml.cloud.ibm.com}
+    iam-url: ${IBM_CLOUD_IAM_URL:https://iam.cloud.ibm.com/identity/token}
+    model-id: ${WATSONX_MODEL_ID:ibm/granite-3-8b-instruct}
+    api-version: ${WATSONX_API_VERSION:2024-03-14}
+    mock-when-missing: ${WATSONX_MOCK_WHEN_MISSING:true}
+  gemini:
+    api-key: ${GEMINI_API_KEY:}
+    base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com}
+    model: ${GEMINI_MODEL:gemini-2.5-flash}
+    mock-when-missing: ${GEMINI_MOCK_WHEN_MISSING:true}
+  linkedin:
+    access-token: ${LINKEDIN_ACCESS_TOKEN:}
+    author-urn: ${LINKEDIN_AUTHOR_URN:}
+    api-version: ${LINKEDIN_API_VERSION:202605}
+    dry-run: ${LINKEDIN_DRY_RUN:true}
